@@ -1,0 +1,6 @@
+<div class="drop-zone" appDragdrop (fileDropped)="onFileDropped($event)">
+    <input type="file" #fileDropRef id="fileDropRef" (change)="fileChangeHandler($event.target)" />
+    <img src="assets/img/dnd.svg" alt="Drag and Drop vector image">
+    <h2>Drag and Drop a file Here</h2>
+    <label for="fileDropRef">Browse for file</label>
+</div>
