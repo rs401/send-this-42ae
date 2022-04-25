@@ -1,3 +1,4 @@
+<ngb-alert #fileSizeLimitAlert *ngIf="errMsg" type="danger" (closed)="errMsg = ''">{{ errMsg }}</ngb-alert>
 <div *ngIf="showForm" class="drop-zone" (drop)="onDrop($event)">
   <input
     type="file"

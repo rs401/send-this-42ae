@@ -10,6 +10,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { HttpClientModule } from "@angular/common/http";
 import { QRCodeModule } from 'angularx-qrcode';
+import { NgbAlertModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,9 @@ import { QRCodeModule } from 'angularx-qrcode';
       registrationStrategy: 'registerWhenStable:30000'
     }),
     HttpClientModule,
-    QRCodeModule
+    QRCodeModule,
+    NgbModule,
+    NgbAlertModule
   ],
   providers: [],
   bootstrap: [AppComponent]

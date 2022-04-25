@@ -14,51 +14,10 @@ const (
 	googleAccessID = "send-this-42ae@appspot.gserviceaccount.com"
 )
 
-// type UrlService struct {
-// 	storageClient  *storage.Client
-// 	saKey          string
-// 	bucketName     string
-// 	googleAccessID string
-// 	filetype       string
-// }
-
-// func NewUrlService() *UrlService {
-// 	ctx := context.Background()
-// 	tempSC, err := storage.NewClient(ctx)
-// 	if err != nil {
-// 		log.Fatal("Couldn't create Storage client:", err)
-// 	}
-
-// 	urlSvc := &UrlService{
-// 		storageClient:  tempSC,
-// 		saKey:          os.Getenv("SA_KEY"),
-// 		bucketName:     "send-this-42ae.appspot.com",
-// 		googleAccessID: "send-this-42ae@appspot.gserviceaccount.com",
-// 		filetype:       "",
-// 	}
-// 	return urlSvc
-// }
-
-// var (
-// 	storageClient *storage.Client
-// 	saKey         string
-// 	filetype      string
-// )
-
 type GeturlsResponse struct {
 	UploadUrl    string `json:"upload_url"`
 	DownloadName string `json:"download_name"`
 }
-
-// func init() {
-// 	ctx := context.Background()
-// 	var err error
-// 	storageClient, err = storage.NewClient(ctx)
-// 	if err != nil {
-// 		log.Fatal("Couldn't create Storage client:", err)
-// 	}
-// 	saKey = os.Getenv("SA_KEY")
-// }
 
 func (us *UrlService) geturls(w http.ResponseWriter, r *http.Request) {
 	us.saKey = os.Getenv("SA_KEY")
@@ -99,39 +58,3 @@ func (us *UrlService) geturls(w http.ResponseWriter, r *http.Request) {
 	})
 
 }
-
-// func genUrl(name string) (string, error) {
-// 	url, err := storageClient.Bucket(bucketName).SignedURL(name, &storage.SignedURLOptions{
-// 		GoogleAccessID: googleAccessID,
-// 		PrivateKey:     []byte(saKey),
-// 		Method:         "PUT",
-// 		Expires:        time.Now().Add(10 * time.Minute),
-// 		ContentType:    filetype,
-// 	})
-// 	if err != nil {
-// 		return "", err
-// 	}
-// 	return url, nil
-// }
-
-// func DownloadUrl(w http.ResponseWriter, r *http.Request) {
-// 	saKey = os.Getenv("SA_KEY")
-// 	parts := strings.Split(r.URL.Path, "/")
-// 	fileUUID := parts[len(parts)-1]
-// 	name := "temp/" + fileUUID
-// 	log.Printf("Redirecting to a new download signed URL for ephemeral resource %q\n", name)
-
-// 	downloadURL, err := storageClient.Bucket(bucketName).SignedURL(name, &storage.SignedURLOptions{
-// 		GoogleAccessID: googleAccessID,
-// 		PrivateKey:     []byte(saKey),
-// 		Method:         "GET",
-// 		Expires:        time.Now().Add(10 * time.Minute),
-// 	})
-// 	if err != nil {
-// 		log.Printf("error generating secure download url: %v\n", err)
-// 		w.WriteHeader(http.StatusInternalServerError)
-// 		json.NewEncoder(w).Encode(map[string]string{"error": "internal server error, down_short_url"})
-// 		return
-// 	}
-// 	http.Redirect(w, r, downloadURL, http.StatusFound)
-// }

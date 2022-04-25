@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, HostListener, OnInit } from '@angular/core';
-import { map } from 'rxjs';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
+import { debounceTime, map, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 
@@ -15,6 +16,8 @@ interface GeturlsResponse {
   styleUrls: ['./form.component.css']
 })
 export class FormComponent implements OnInit {
+  private _error = new Subject<string>();
+  errMsg: string = '';
   file!: File;
   backend: string;
   geturlsResponse!: GeturlsResponse;
@@ -23,11 +26,23 @@ export class FormComponent implements OnInit {
   showQr: boolean = false;
   qrURL: string = "";
 
+  @ViewChild('fileSizeLimitAlert', {static: false}) fileSizeLimitAlert!: NgbAlert;
+
   constructor(private http: HttpClient) {
     this.backend = environment.backend;
   }
 
   ngOnInit(): void {
+    this._error.subscribe(msg => this.errMsg = msg);
+    this._error.pipe(debounceTime(5000)).subscribe(() => {
+      if(this.fileSizeLimitAlert) {
+        this.fileSizeLimitAlert.close();
+      }
+    });
+  }
+
+  displayError(msg: string) {
+    this._error.next(msg);
   }
 
   fileChangeHandler(event: any): void {
@@ -38,6 +53,16 @@ export class FormComponent implements OnInit {
     if (!tmpFile) {
       tmpFile = (event.dataTransfer.files as FileList)[0];
     }
+    // Limit file size
+    if(tmpFile.size/1024/1024 > 10) {
+      // Stop spinner and show form again
+      this.showSpinner = false;
+      this.showForm = true;
+      // set error message and return
+      this.displayError('ERROR: File size must not exceed 10Mb.');
+      return
+    }
+    
     const formData = new FormData();
     formData.append('filetype', tmpFile.type)
     this.file = tmpFile;

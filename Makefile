@@ -6,6 +6,7 @@ set-project: ## set the correct project
 	@gcloud config set project send-this-42ae
 
 deploy: deploy-backend deploy-frontend  ## deploy frontend and backend
+
 deploy-backend: deploy-geturls deploy-downurls  ## deploy backend cloud functions
 
 deploy-geturls: set-project ## deploy geturls cloud function
@@ -14,7 +15,9 @@ deploy-geturls: set-project ## deploy geturls cloud function
 deploy-downurls: set-project ## deploy downurls cloud function
 	@cd backend/functions;gcloud functions deploy downurl --entry-point DownloadUrl --runtime go116 --trigger-http --allow-unauthenticated > current-downurl-deploy.log 2>&1 &
 
-deploy-frontend: ## deploy the frontend angular project to firebase
+deploy-frontend: build-frontend ## deploy the frontend angular project to firebase
 	@firebase deploy
 
-
+build-frontend: ## build angular frontend and copy robots.txt
+	@ng b
+	@cp robots.txt dist/send-this
