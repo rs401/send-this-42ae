@@ -49,3 +49,4 @@ notes.md
 *.BAK
 .firebase
 .vscode
+*.log
