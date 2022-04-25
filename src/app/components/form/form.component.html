@@ -1,6 +1,14 @@
-<div class="drop-zone" appDragdrop (fileDropped)="onFileDropped($event)">
-    <input type="file" #fileDropRef id="fileDropRef" (change)="fileChangeHandler($event.target)" />
-    <img src="assets/img/dnd.svg" alt="Drag and Drop vector image">
-    <h2>Drag and Drop a file Here</h2>
-    <label for="fileDropRef">Browse for file</label>
+<div *ngIf="showForm" class="drop-zone" (drop)="onDrop($event)">
+  <input
+    type="file"
+    #fileDropRef
+    id="fileDropRef"
+    [multiple]="false"
+    (change)="fileChangeHandler($event)"
+  />
+  <img src="assets/img/dnd.svg" alt="Drag and Drop vector image" />
+  <h2>Drag and Drop a file Here</h2>
+  <label for="fileDropRef">Browse for file</label>
 </div>
+<div *ngIf="showSpinner" class="spin"></div>
+<qrcode *ngIf="showQr" [qrdata]="qrURL" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>

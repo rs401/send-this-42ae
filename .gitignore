@@ -45,3 +45,6 @@ Thumbs.db
 environments/
 environment.ts
 environment.prod.ts
+notes.md
+*.BAK
+.firebase

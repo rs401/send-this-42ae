@@ -1,0 +1,28 @@
+Deploying function (may take a while - up to 2 minutes)...
+..
+For Cloud Build Logs, visit: https://console.cloud.google.com/cloud-build/builds;region=us-central1/ebf35231-6235-4975-a30b-0f000a8a44bd?project=735756216267
+..................................................done.
+availableMemoryMb: 256
+buildId: ebf35231-6235-4975-a30b-0f000a8a44bd
+buildName: projects/735756216267/locations/us-central1/builds/ebf35231-6235-4975-a30b-0f000a8a44bd
+dockerRegistry: CONTAINER_REGISTRY
+entryPoint: DownloadUrl
+httpsTrigger:
+  securityLevel: SECURE_OPTIONAL
+  url: https://us-central1-send-this-42ae.cloudfunctions.net/downurl
+ingressSettings: ALLOW_ALL
+labels:
+  deployment-tool: cli-gcloud
+name: projects/send-this-42ae/locations/us-central1/functions/downurl
+runtime: go116
+secretEnvironmentVariables:
+- key: SA_KEY
+  projectId: '735756216267'
+  secret: send-this-sa-key
+  version: latest
+serviceAccountEmail: send-this-42ae@appspot.gserviceaccount.com
+sourceUploadUrl: https://storage.googleapis.com/uploads-723720882702.us-central1.cloudfunctions.appspot.com/aa979284-8d4f-4910-af36-ac44a8909f1b.zip
+status: ACTIVE
+timeout: 60s
+updateTime: '2022-04-23T23:33:51.538Z'
+versionId: '6'
