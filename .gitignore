@@ -48,3 +48,4 @@ environment.prod.ts
 notes.md
 *.BAK
 .firebase
+.vscode
